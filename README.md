@@ -3,8 +3,7 @@
 ### License: Apache License 2.0
 ### Features
 
-* Groups supported
-* Chats (Direct Messages) support
+* Groups and Chats (Direct Messages) supported
 * Send and receive messages
 * Push Notification support
 * Support for the GroupMe Image API
