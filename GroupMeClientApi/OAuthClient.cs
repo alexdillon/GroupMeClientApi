@@ -70,6 +70,9 @@ namespace GroupMeClientApi
 
                 if (!string.IsNullOrEmpty(context.Request.QueryString["access_token"]))
                 {
+                    var key = context.Request.QueryString["access_token"];
+
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     using (System.IO.StreamWriter sw = new System.IO.StreamWriter(context.Response.OutputStream))
                     {
                         string successPage = GroupMeClientApi.Properties.Resources.SuccessPage;
@@ -78,9 +81,6 @@ namespace GroupMeClientApi
                         sw.WriteLine(successPage);
                     }
 
-                    var key = context.Request.QueryString["access_token"];
-
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
                     context.Response.Close();
 
                     this.TokenReady.SetResult(key);
