@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -9,6 +10,21 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class ImageAttachment : Attachment
     {
+        /// <summary>
+        /// Gets a listing of supported extension for GroupMe Image Attachments.
+        /// </summary>
+        public static IEnumerable<string> SupportedExtensions
+        {
+            get
+            {
+                string[] supportedExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
+                foreach (var key in supportedExtensions)
+                {
+                    yield return key;
+                }
+            }
+        }
+
         /// <inheritdoc/>
         [JsonProperty("type")]
         public override string Type { get; } = "image";
