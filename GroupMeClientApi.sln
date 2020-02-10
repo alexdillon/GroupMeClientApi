@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupMeClientApi", "GroupMeClientApi.csproj", "{CF98C0E1-7465-4CD4-B325-87935188011E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroupMeClientApi", "GroupMeClientApi\GroupMeClientApi.csproj", "{CF98C0E1-7465-4CD4-B325-87935188011E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "..\Sample\Sample.csproj", "{A7641801-77C9-4848-952F-3C539E99E86E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample", "Sample\Sample.csproj", "{A7641801-77C9-4848-952F-3C539E99E86E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
