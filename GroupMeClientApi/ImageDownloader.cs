@@ -78,20 +78,10 @@ namespace GroupMeClientApi
         }
 
         /// <summary>
-        /// Downloads a image from GroupMe.
-        /// </summary>
-        /// <param name="url">The URL of the image.</param>
-        /// <returns>An image.</returns>
-        protected virtual Task<byte[]> DownloadRawImageAsync(string url)
-        {
-            return this.HttpClient.GetByteArrayAsync(url);
-        }
-
-        /// <summary>
         /// Gets the default avatar for a person.
         /// </summary>
         /// <returns>A image object.</returns>
-        protected byte[] GetDefaultPersonAvatar()
+        public byte[] GetDefaultPersonAvatar()
         {
             var bytes = GroupMeClientApi.Properties.Resources.DefaultPersonAvatar;
             return bytes;
@@ -101,10 +91,20 @@ namespace GroupMeClientApi
         /// Gets the default avatar for a group.
         /// </summary>
         /// <returns>A image object.</returns>
-        protected byte[] GetDefaultGroupAvatar()
+        public byte[] GetDefaultGroupAvatar()
         {
             var bytes = GroupMeClientApi.Properties.Resources.DefaultGroupAvatar;
             return bytes;
+        }
+
+        /// <summary>
+        /// Downloads a image from GroupMe.
+        /// </summary>
+        /// <param name="url">The URL of the image.</param>
+        /// <returns>An image.</returns>
+        protected virtual Task<byte[]> DownloadRawImageAsync(string url)
+        {
+            return this.HttpClient.GetByteArrayAsync(url);
         }
     }
 }
