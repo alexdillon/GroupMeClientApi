@@ -267,7 +267,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> UpdateNickname(string name)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}//memberships/update", Method.POST);
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
             var payload = new
             {
                 membership = new
@@ -303,7 +303,7 @@ namespace GroupMeClientApi.Models
                 imageUrl = imageAttachment.Url;
             }
 
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}//memberships/update", Method.POST);
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
             var payload = new
             {
                 membership = new
