@@ -260,6 +260,67 @@ namespace GroupMeClientApi.Models
         }
 
         /// <summary>
+        /// Updates the nickname for the current <see cref="Member"/>. This change applies
+        /// only to the current <see cref="Group"/>.
+        /// </summary>
+        /// <param name="name">The new nickname.</param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UpdateNickname(string name)
+        {
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
+            var payload = new
+            {
+                membership = new
+                {
+                    nickname = name,
+                },
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Updates the avatar for the current <see cref="Member"/>. This change applies
+        /// only to the current <see cref="Group"/>.
+        /// </summary>
+        /// <param name="imageData">
+        /// The new avatar image, as raw bytes.
+        /// If null, the <see cref="Member"/>'s global avatar will be used.
+        /// </param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UpdateMemberAvatar(byte[] imageData)
+        {
+            var imageUrl = string.Empty;
+
+            if (imageData != null)
+            {
+                var imageAttachment = await Attachments.ImageAttachment.CreateImageAttachment(imageData, this);
+                imageUrl = imageAttachment.Url;
+            }
+
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
+            var payload = new
+            {
+                membership = new
+                {
+                    avatar_url = imageUrl,
+                },
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
         /// Preview of the most recent message in a <see cref="Group"/> and information about when it was last updated.
         /// </summary>
         public class MessagesPreview
