@@ -133,6 +133,8 @@ namespace GroupMeClientApi.Models
                     Attachments = this.MsgPreview.Preview.Attachments,
                     Text = this.MsgPreview.Preview.Text,
                     Name = this.MsgPreview.Preview.Nickname,
+                    CreatedAtUnixTime = this.MsgPreview.LastMessageCreatedAtUnixTime,
+                    Id = this.MsgPreview.LastMessageId,
                 };
 
                 return msg;
