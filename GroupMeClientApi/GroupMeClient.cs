@@ -17,6 +17,11 @@ namespace GroupMeClientApi
         /// </summary>
         internal const string GroupMeReadReceiptUrl = "https://v2.groupme.com/read_receipts";
 
+        /// <summary>
+        /// The Base URL to for GroupMe's V2 API.
+        /// </summary>
+        internal const string GroupMeAPIUrlV2 = "https://v2.groupme.com/";
+
         private const string GroupMeAPIUrl = "https://api.groupme.com/v3";
 
         /// <summary>
