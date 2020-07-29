@@ -23,6 +23,10 @@
     <NoWarn>$(NoWarn),SA1633,SA0001</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="stylecop.json" />
     <None Include="..\LICENSE">

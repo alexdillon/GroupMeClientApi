@@ -85,6 +85,20 @@ namespace GroupMeClientApi.Models
         public bool OfficeMode { get; internal set; }
 
         /// <summary>
+        /// Gets a value indicating the time when the group will be unmuted, in Unix format.
+        /// </summary>
+        [JsonProperty("muted_until")]
+        public long? MutedUntilUnixTime { get; internal set; } = 0;
+
+        /// <summary>
+        /// Gets the time when the group will be unmuted. If the group is not muted, this will return Unix epoch.
+        /// </summary>
+        /// <remarks>
+        /// GroupMe returns 253402300800 for an infinite mute, which is out-of-range for Unix timestamps. Hence the -1 workaround.
+        /// </remarks>
+        public DateTime MutedUntilTime => DateTimeOffset.FromUnixTimeSeconds(this.MutedUntilUnixTime - 1 ?? 0).ToLocalTime().DateTime;
+
+        /// <summary>
         /// Gets a Url to share the group.
         /// </summary>
         [JsonProperty("share_url")]
@@ -312,6 +326,123 @@ namespace GroupMeClientApi.Models
                 {
                     avatar_url = imageUrl,
                 },
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Updates the name of this <see cref="Group"/>.
+        /// </summary>
+        /// <param name="name">The new group name.</param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UpdateGroupName(string name)
+        {
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var payload = new
+            {
+                name = name,
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Updates the description of this <see cref="Group"/>.
+        /// </summary>
+        /// <param name="description">The new description.</param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UpdateGroupDescription(string description)
+        {
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var payload = new
+            {
+                description = description,
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Updates the avatar for the this <see cref="Group"/>.
+        /// </summary>
+        /// <param name="imageData">
+        /// The new avatar image, as raw bytes.
+        /// If null, the avatar will be set to the generic image.
+        /// </param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UpdateGroupAvatar(byte[] imageData)
+        {
+            var imageUrl = string.Empty;
+
+            if (imageData != null)
+            {
+                var imageAttachment = await Attachments.ImageAttachment.CreateImageAttachment(imageData, this);
+                imageUrl = imageAttachment.Url;
+            }
+
+            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var payload = new
+            {
+                image_url = imageUrl,
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Mutes this <see cref="Group"/>.
+        /// </summary>
+        /// <param name="durationMinutes">
+        /// The duration the group should be muted for, expressed in minutes.
+        /// To mute the group indefinitely, specify a duration of null.</param>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> MuteGroup(int? durationMinutes)
+        {
+            var request = this.Client.CreateRestRequest($"{GroupMeClient.GroupMeAPIUrlV2}/groups/{this.Id}/memberships/mute", Method.POST);
+
+            var payload = new
+            {
+                duration = durationMinutes,
+            };
+
+            request.AddJsonBody(payload);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Unmutes this <see cref="Group"/>.
+        /// </summary>
+        /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
+        public async Task<bool> UnMuteGroup()
+        {
+            var request = this.Client.CreateRestRequest($"{GroupMeClient.GroupMeAPIUrlV2}/groups/{this.Id}/memberships/unmute", Method.POST);
+            var payload = new
+            {
             };
 
             request.AddJsonBody(payload);
