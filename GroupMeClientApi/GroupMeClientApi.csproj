@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <Authors>Alex Dillon</Authors>
     <Company>MicroCube Software</Company>
     <Description>GroupMeClientApi provides a C# API Client for interacting with GroupMe</Description>
-    <PackageProjectUrl>https://github.com/alexdillon/GroupMeClient</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/alexdillon/GroupMeClient</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/alexdillon/GroupMeClientApi</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/alexdillon/GroupMeClientApi</RepositoryUrl>
     <PackageTags>GroupMe API</PackageTags>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
