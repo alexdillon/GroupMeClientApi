@@ -49,6 +49,12 @@ namespace GroupMeClientApi.Models
         public int CreatedAtUnixTime { get; internal set; }
 
         /// <summary>
+        /// Gets the ISO8601 timestamp when the <see cref="Contact"/> was created.
+        /// </summary>
+        [JsonProperty("created_at_iso8601")]
+        public string CreatedAtIso8601Time { get; internal set; }
+
+        /// <summary>
         /// Gets the time when the <see cref="Contact"/> was created.
         /// </summary>
         public DateTime CreatedAtTime => DateTimeOffset.FromUnixTimeSeconds(this.CreatedAtUnixTime).ToLocalTime().DateTime;
@@ -80,7 +86,7 @@ namespace GroupMeClientApi.Models
         /// <summary>
         /// Gets the reason for a <see cref="Contact"/>. Unsure of what this value represents.
         /// </summary>
-        [JsonProperty("id")]
+        [JsonProperty("reason")]
         public int Reason { get; internal set; }
 
         /// <summary>
@@ -88,6 +94,12 @@ namespace GroupMeClientApi.Models
         /// </summary>
         [JsonProperty("updated_at")]
         public int UpdatedAtUnixTime { get; internal set; }
+
+        /// <summary>
+        /// Gets the ISO 8601 timestamp when the <see cref="Contact"/> was last updated.
+        /// </summary>
+        [JsonProperty("updated_at_iso8601")]
+        public string UpdatedAtIso8601Time { get; internal set; }
 
         /// <summary>
         /// Gets the time when the <see cref="Contact"/> was last updated.
@@ -99,5 +111,10 @@ namespace GroupMeClientApi.Models
         /// </summary>
         [JsonProperty("user_id")]
         public string UserId { get; internal set; }
+
+        /// <summary>
+        /// Gets the <see cref="GroupMeClient"/> that manages.
+        /// </summary>
+        public GroupMeClient Client { get; internal set; }
     }
 }

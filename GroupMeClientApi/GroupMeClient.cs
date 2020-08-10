@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using GroupMeClientApi.Models;
@@ -22,6 +23,11 @@ namespace GroupMeClientApi
         /// </summary>
         internal const string GroupMeAPIUrlV2 = "https://v2.groupme.com/";
 
+        /// <summary>
+        /// The Base URL for GroupMe's V4 API.
+        /// </summary>
+        internal const string GroupMeAPIUrlV4 = "https://api.groupme.com/v4";
+
         private const string GroupMeAPIUrl = "https://api.groupme.com/v3";
 
         /// <summary>
@@ -34,6 +40,7 @@ namespace GroupMeClientApi
 
             this.GroupsList = new List<Group>();
             this.ChatsList = new List<Chat>();
+            this.ContactsList = new List<Contact>();
         }
 
         /// <summary>
@@ -45,6 +52,11 @@ namespace GroupMeClientApi
         /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API calls.
         /// </summary>
         internal RestClient ApiClient { get; } = new RestClient(GroupMeAPIUrl);
+
+        /// <summary>
+        /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API v4 calls.
+        /// </summary>
+        internal RestClient ApiV4Client { get; } = new RestClient(GroupMeAPIUrlV4);
 
         /// <summary>
         /// Gets or sets the authenticated user.
@@ -64,6 +76,8 @@ namespace GroupMeClientApi
         private List<Group> GroupsList { get; set; }
 
         private List<Chat> ChatsList { get; set; }
+
+        private List<Contact> ContactsList { get; set; }
 
         /// <summary>
         /// Gets a enumeration of <see cref="Group"/>s controlled by the API Client.
@@ -90,6 +104,18 @@ namespace GroupMeClientApi
             foreach (var chat in this.ChatsList)
             {
                 yield return chat;
+            }
+        }
+
+        /// <summary>
+        /// Gets an enumeration of <see cref="Contact"/>s controlled by the API Client.
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Contact"/>s.</returns>
+        public virtual IEnumerable<Contact> Contacts()
+        {
+            foreach (var contact in this.ContactsList)
+            {
+                yield return contact;
             }
         }
 
@@ -178,6 +204,52 @@ namespace GroupMeClientApi
             else
             {
                 throw new System.Net.WebException($"Failure retreving /Groups. Status Code {restResponse.StatusCode}");
+            }
+        }
+
+        /// <summary>
+        /// Returns a listing of all <see cref="Contact"/>s of the user.
+        /// </summary>
+        /// <param name="retrieveSinceMode">Specify whether to employ "since" retrieval mode for receiving list of <see cref="Contact"/>s.</param>
+        /// <param name="messageCreatedAtIso8601">The ISO8601 timestamp used to determine which contacts to receive if the "since" retrieval mode is true.</param>
+        /// <returns>A list of <see cref="Contact"/>s.</returns>
+        public virtual async Task<ICollection<Contact>> GetContactsAsync(bool retrieveSinceMode = false, string messageCreatedAtIso8601 = "")
+        {
+            const string IncludeBlocked = "true";     // based on GroupMe Web, can retrieve 200 contacts per API request
+
+            var request = this.CreateRestRequest($"/relationships", Method.GET);
+            request.AddParameter("include_blocked", IncludeBlocked);
+
+            if (retrieveSinceMode)
+            {
+                request.AddParameter("since", messageCreatedAtIso8601);
+            }
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.ApiV4Client.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+
+            if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                var results = JsonConvert.DeserializeObject<ContactsList>(restResponse.Content);
+
+                foreach (var contact in results.Contacts)
+                {
+                    var oldContact = this.ContactsList.Find(c => c.Id == contact.Id);
+                    if (oldContact == null)
+                    {
+                        this.ContactsList.Add(contact);
+                    }
+                    else
+                    {
+                        DataMerger.MergeContact(oldContact, contact);
+                    }
+                }
+
+                return results.Contacts;
+            }
+            else
+            {
+                throw new System.Net.WebException($"Failure retrieving /Contacts. Status Code {restResponse.StatusCode}");
             }
         }
 
