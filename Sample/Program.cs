@@ -29,11 +29,25 @@ namespace Sample
                 Console.WriteLine($"{messageContainer.Name} - Updated {messageContainer.UpdatedAtTime.ToString()}");
             }
 
+            Console.WriteLine();
+
             int i = 1;
             foreach (Contact contact in client.Contacts())
             {
-                Console.WriteLine($"{contact.Name} - Updated {contact.UpdatedAtTime.ToString()}      {i}");
+                Console.WriteLine($"{contact.Name} - Updated {contact.UpdatedAtTime.ToString()}");
                 i++;
+            }
+            Console.Write($"You have {i} contacts.");
+
+            Contact contact1 = client.Contacts().Where(c => c.Id == "ID_HERE").First();
+
+            if (!contact1.Blocked)
+            {
+                await contact1.BlockContact();        // blocking a contact of Id "ID_HERE"
+            }
+            else
+            {
+                await contact1.UnblockContact();      // unblocking that contact
             }
         }
     }

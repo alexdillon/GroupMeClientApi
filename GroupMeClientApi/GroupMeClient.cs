@@ -243,6 +243,7 @@ namespace GroupMeClientApi
                     {
                         DataMerger.MergeContact(oldContact, contact);
                     }
+                    contact.Client = this;
                 }
 
                 return results.Contacts;
