@@ -8,18 +8,18 @@ namespace GroupMeClientApi.Models
     /// <summary>
     /// <see cref="ContactsList"/> provides a list of <see cref="Contact"/>s along with additional status information.
     /// </summary>
-    public class ContactsList
+    internal class ContactsList
     {
         /// <summary>
-        /// Gets the list of <see cref="Contact"/>s.
+        /// Gets or sets the list of <see cref="Contact"/>s.
         /// </summary>
         [JsonProperty("response")]
-        public IList<Contact> Contacts { get; internal set; }
+        internal IList<Contact> Contacts { get; set; }
 
         /// <summary>
-        /// Gets the Metadata for the API Call.
+        /// Gets or sets the Metadata for the API Call.
         /// </summary>
         [JsonProperty("meta")]
-        public Meta Meta { get; internal set; }
+        internal Meta Meta { get; set; }
     }
 }
