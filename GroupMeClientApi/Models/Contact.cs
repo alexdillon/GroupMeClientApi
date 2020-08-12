@@ -75,22 +75,10 @@ namespace GroupMeClientApi.Models
         public string Id { get; internal set; }
 
         /// <summary>
-        /// Gets the MRI of a <see cref="Contact"/>. Unsure of what this value represents.
-        /// </summary>
-        [JsonProperty("mri")]
-        public string Mri { get; internal set; }
-
-        /// <summary>
         /// Gets a <see cref="Contact"/>'s full name or username.
         /// </summary>
         [JsonProperty("name")]
         public string Name { get; internal set; }
-
-        /// <summary>
-        /// Gets the reason for a <see cref="Contact"/>. Unsure of what this value represents.
-        /// </summary>
-        [JsonProperty("reason")]
-        public int Reason { get; internal set; }
 
         /// <summary>
         /// Gets the Unix Timestamp when the <see cref="Contact"/> was last updated.
@@ -126,7 +114,7 @@ namespace GroupMeClientApi.Models
         /// <returns>True if this <see cref="Contact"/> is successfully blocked.</returns>
         public async Task<bool> BlockContact()
         {
-            this.Client.WhoAmI();
+            var me = this.Client.WhoAmI();
             var request = this.Client.CreateRestRequest($"/blocks?user={this.Client.Me.Id}&otherUser={this.Id}", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -141,7 +129,7 @@ namespace GroupMeClientApi.Models
         /// <returns>True if this <see cref="Contact"/> is successfully unblocked.</returns>
         public async Task<bool> UnblockContact()
         {
-            this.Client.WhoAmI();
+            var me = this.Client.WhoAmI();
             var request = this.Client.CreateRestRequest($"/blocks?user={this.Client.Me.Id}&otherUser={this.Id}", Method.DELETE);
 
             var cancellationTokenSource = new CancellationTokenSource();

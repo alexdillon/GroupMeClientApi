@@ -147,9 +147,7 @@ namespace GroupMeClientApi
             dest.CreatedAtUnixTime = source.CreatedAtUnixTime;
             dest.Hidden = source.Hidden;
             dest.Id = source.Id;
-            dest.Mri = source.Mri;
             dest.Name = source.Name;
-            dest.Reason = source.Reason;
             dest.UpdatedAtIso8601Time = source.UpdatedAtIso8601Time;
             dest.UpdatedAtUnixTime = source.UpdatedAtUnixTime;
             dest.UserId = source.UserId;
