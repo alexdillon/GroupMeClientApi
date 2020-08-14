@@ -12,6 +12,7 @@ namespace GroupMeClientApi.Models
     {
         /// <summary>
         /// Gets the avatar URL for this <see cref="IAvatarSource"/>.
+        /// </summary>
         string ImageOrAvatarUrl { get; }
 
         /// <summary>

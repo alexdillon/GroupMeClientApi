@@ -132,5 +132,25 @@ namespace GroupMeClientApi
             dest.FavoritedBy = new List<string>();
             (dest.FavoritedBy as List<string>).AddRange(source.FavoritedBy);
         }
+
+        /// <summary>
+        /// Merges a cached <see cref="Contact"/> from the database with updated information from GroupMe.
+        /// </summary>
+        /// <param name="dest">The <see cref="Contact"/> to copy from.</param>
+        /// <param name="source">The <see cref="Contact"/> to copy into.</param>
+        internal static void MergeContact(Contact dest, Contact source)
+        {
+            dest.AppInstalled = source.AppInstalled;
+            dest.AvatarUrl = source.AvatarUrl;
+            dest.Blocked = source.Blocked;
+            dest.CreatedAtIso8601Time = source.CreatedAtIso8601Time;
+            dest.CreatedAtUnixTime = source.CreatedAtUnixTime;
+            dest.Hidden = source.Hidden;
+            dest.Id = source.Id;
+            dest.Name = source.Name;
+            dest.UpdatedAtIso8601Time = source.UpdatedAtIso8601Time;
+            dest.UpdatedAtUnixTime = source.UpdatedAtUnixTime;
+            dest.UserId = source.UserId;
+        }
     }
 }
