@@ -18,7 +18,7 @@ namespace Sample
 
             foreach (IMessageContainer messageContainer in Enumerable.Concat<IMessageContainer>(client.Groups(), client.Chats()))
             {
-                Console.WriteLine($"{messageContainer.Name} - Updated {messageContainer.UpdatedAtTime.ToString()}");
+                Console.WriteLine($"{messageContainer.Name} - Updated {messageContainer.UpdatedAtTime}");
             }
 
             Console.Write($"\nYou have {client.Contacts.Count()} contacts.");

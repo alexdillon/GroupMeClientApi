@@ -193,7 +193,7 @@ namespace GroupMeClientApi.Models
             var conversationId = this.ConversationId ?? this.GroupId;
             var groupmeClient = this.Chat?.Client ?? this.Group?.Client;
 
-            var request = groupmeClient.CreateRestRequest($"/messages/{conversationId}/{this.Id}/like", Method.POST);
+            var request = groupmeClient.CreateRestRequestV3($"/messages/{conversationId}/{this.Id}/like", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
             var restResponse = await groupmeClient.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
@@ -210,7 +210,7 @@ namespace GroupMeClientApi.Models
             var conversationId = this.ConversationId ?? this.GroupId;
             var groupmeClient = this.Chat?.Client ?? this.Group?.Client;
 
-            var request = groupmeClient.CreateRestRequest($"/messages/{conversationId}/{this.Id}/unlike", Method.POST);
+            var request = groupmeClient.CreateRestRequestV3($"/messages/{conversationId}/{this.Id}/unlike", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
             var restResponse = await groupmeClient.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);

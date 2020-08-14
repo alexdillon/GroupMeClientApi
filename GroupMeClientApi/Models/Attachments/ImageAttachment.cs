@@ -45,7 +45,7 @@ namespace GroupMeClientApi.Models.Attachments
         /// <returns>An <see cref="ImageAttachment"/> if uploaded successfully, null otherwise.</returns>
         public static async Task<ImageAttachment> CreateImageAttachment(byte[] image, IMessageContainer messageContainer)
         {
-            var request = messageContainer.Client.CreateRestRequest(ImageAttachment.GroupMeImageApiUrl, RestSharp.Method.POST);
+            var request = messageContainer.Client.CreateRawRestRequest(ImageAttachment.GroupMeImageApiUrl, RestSharp.Method.POST);
             request.AddParameter("image/jpeg", image, RestSharp.ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();

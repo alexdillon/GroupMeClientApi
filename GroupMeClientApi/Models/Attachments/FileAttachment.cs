@@ -40,7 +40,7 @@ namespace GroupMeClientApi.Models.Attachments
             var url = GetGroupMeFileApiBaseUrl(messageContainer.Messages.First()) + $"/files/?name={encodedFilename}";
             var mimeType = GroupMeDocumentMimeTypeMapper.ExtensionToMimeType(System.IO.Path.GetExtension(filename));
 
-            var request = messageContainer.Client.CreateRestRequest(url, RestSharp.Method.POST);
+            var request = messageContainer.Client.CreateRawRestRequest(url, RestSharp.Method.POST);
             request.AddParameter(mimeType, document, RestSharp.ParameterType.RequestBody);
 
             var restResponse = await messageContainer.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
@@ -79,7 +79,7 @@ namespace GroupMeClientApi.Models.Attachments
         public async Task<FileData> GetFileData(Message message)
         {
             var messageContainer = (IMessageContainer)message.Group ?? (IMessageContainer)message.Chat;
-            var request = messageContainer.Client.CreateRestRequest(FileAttachment.GetGroupMeFileDataApiUrl(message), RestSharp.Method.POST);
+            var request = messageContainer.Client.CreateRawRestRequest(FileAttachment.GetGroupMeFileDataApiUrl(message), RestSharp.Method.POST);
 
             var payload = new
             {
@@ -112,7 +112,7 @@ namespace GroupMeClientApi.Models.Attachments
         {
             var url = GetGroupMeFileApiBaseUrl(message) + $"/files/{this.Id}";
             var messageContainer = (IMessageContainer)message.Group ?? message.Chat;
-            var request = messageContainer.Client.CreateRestRequest(url, RestSharp.Method.POST);
+            var request = messageContainer.Client.CreateRawRestRequest(url, RestSharp.Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
             var restResponse = await messageContainer.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
@@ -133,7 +133,7 @@ namespace GroupMeClientApi.Models.Attachments
 
         private static async Task<FileUploadStatusResponse> CheckUploadStatus(string checkUrl, IMessageContainer messageContainer, CancellationTokenSource cancellationTokenSource)
         {
-            var request = messageContainer.Client.CreateRestRequest(checkUrl, RestSharp.Method.GET);
+            var request = messageContainer.Client.CreateRawRestRequest(checkUrl, RestSharp.Method.GET);
             var restResponse = await messageContainer.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
