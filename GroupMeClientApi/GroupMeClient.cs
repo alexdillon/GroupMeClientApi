@@ -128,7 +128,7 @@ namespace GroupMeClientApi
             request.AddParameter("per_page", MaxPerPage); // always all available groups.
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var results = JsonConvert.DeserializeObject<GroupsList>(restResponse.Content);
@@ -170,7 +170,7 @@ namespace GroupMeClientApi
             request.AddParameter("per_page", MaxPerPage); // always all available chats.
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -223,7 +223,7 @@ namespace GroupMeClientApi
             }
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {

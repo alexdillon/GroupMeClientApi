@@ -39,7 +39,7 @@ namespace GroupMeClientApi.Models.Attachments
             request.AddParameter("image/jpeg", image, RestSharp.ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
