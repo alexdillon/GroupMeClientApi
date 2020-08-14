@@ -86,7 +86,7 @@ namespace GroupMeClientApi.Models
         public GroupMeClient Client { get; internal set; }
 
         /// <inheritdoc />
-        public ChatMessagesList.MessageListResponse.ReadReceipt ReadReceipt { get; private set; }
+        public ReadReceipt ReadReceipt { get; private set; }
 
         /// <inheritdoc />
         public string ImageOrAvatarUrl => ((IAvatarSource)this.OtherUser).ImageOrAvatarUrl;

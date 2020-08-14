@@ -165,7 +165,7 @@ namespace GroupMeClientApi.Models
         bool IAvatarSource.IsRoundedAvatar => false;
 
         /// <inheritdoc />
-        public ChatMessagesList.MessageListResponse.ReadReceipt ReadReceipt => null;
+        public ReadReceipt ReadReceipt => null;
 
         /// <summary>
         /// Returns a set of messages from a this Group Chat.
