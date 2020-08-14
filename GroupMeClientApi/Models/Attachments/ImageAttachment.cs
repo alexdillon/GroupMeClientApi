@@ -13,17 +13,7 @@ namespace GroupMeClientApi.Models.Attachments
         /// <summary>
         /// Gets a listing of supported extension for GroupMe Image Attachments.
         /// </summary>
-        public static IEnumerable<string> SupportedExtensions
-        {
-            get
-            {
-                string[] supportedExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
-                foreach (var key in supportedExtensions)
-                {
-                    yield return key;
-                }
-            }
-        }
+        public static IEnumerable<string> SupportedExtensions { get; } = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
 
         /// <inheritdoc/>
         [JsonProperty("type")]
