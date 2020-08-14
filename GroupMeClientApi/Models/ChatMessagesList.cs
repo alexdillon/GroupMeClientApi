@@ -16,10 +16,10 @@ namespace GroupMeClientApi.Models
         public MessageListResponse Response { get; internal set; }
 
         /// <summary>
-        /// Gets the metadata containing additional status information from GroupMe.
+        /// Gets or sets the metadata containing additional status information from GroupMe.
         /// </summary>
         [JsonProperty("meta")]
-        public Meta Meta { get; internal set; }
+        internal Meta Meta { get; set; }
 
         /// <summary>
         /// Contains a list of messages and supporting information for a <see cref="Chat"/>.

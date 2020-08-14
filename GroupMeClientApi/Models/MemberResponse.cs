@@ -3,7 +3,7 @@
 namespace GroupMeClientApi.Models
 {
     /// <summary>
-    /// Represents a Response wrapping a GroupMe User.
+    /// Represents a response wrapping a GroupMe User.
     /// </summary>
     internal class MemberResponse
     {
