@@ -211,7 +211,7 @@ namespace GroupMeClientApi.Models
             }
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -261,7 +261,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.Created;
         }
@@ -295,7 +295,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -331,7 +331,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -352,7 +352,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -373,7 +373,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -405,7 +405,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -429,7 +429,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -448,7 +448,7 @@ namespace GroupMeClientApi.Models
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
