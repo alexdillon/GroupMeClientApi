@@ -86,7 +86,7 @@ namespace GroupMeClientApi.Models
         public GroupMeClient Client { get; internal set; }
 
         /// <inheritdoc />
-        public ChatMessagesList.MessageListResponse.ReadReceipt ReadReceipt { get; private set; }
+        public ReadReceipt ReadReceipt { get; private set; }
 
         /// <inheritdoc />
         public string ImageOrAvatarUrl => ((IAvatarSource)this.OtherUser).ImageOrAvatarUrl;
@@ -102,7 +102,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A list of <see cref="Message"/>.</returns>
         public async Task<ICollection<Message>> GetMessagesAsync(MessageRetreiveMode mode = MessageRetreiveMode.None, string messageId = "")
         {
-            var request = this.Client.CreateRestRequest($"/direct_messages", Method.GET);
+            var request = this.Client.CreateRestRequestV3($"/direct_messages", Method.GET);
             request.AddParameter("other_user_id", this.OtherUser.Id);
             switch (mode)
             {
@@ -169,7 +169,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the send operation.</returns>
         public async Task<bool> SendMessage(Message message)
         {
-            var request = this.Client.CreateRestRequest($"/direct_messages", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/direct_messages", Method.POST);
 
             // Add the Recipient ID into the message, as GroupMe's API requires for DM's
             message.RecipientId = this.OtherUser.Id;
@@ -194,7 +194,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the send operation.</returns>
         public async Task<bool> SendReadReceipt(Message message)
         {
-            var request = this.Client.CreateRestRequest(GroupMeClient.GroupMeReadReceiptUrl, Method.POST);
+            var request = this.Client.CreateRestRequestV2("/read_receipts", Method.POST);
             var payload = new
             {
                 read_receipt = new

@@ -13,17 +13,7 @@ namespace GroupMeClientApi.Models.Attachments
         /// <summary>
         /// Gets a listing of supported extension for GroupMe Image Attachments.
         /// </summary>
-        public static IEnumerable<string> SupportedExtensions
-        {
-            get
-            {
-                string[] supportedExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
-                foreach (var key in supportedExtensions)
-                {
-                    yield return key;
-                }
-            }
-        }
+        public static IEnumerable<string> SupportedExtensions { get; } = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
 
         /// <inheritdoc/>
         [JsonProperty("type")]
@@ -45,7 +35,7 @@ namespace GroupMeClientApi.Models.Attachments
         /// <returns>An <see cref="ImageAttachment"/> if uploaded successfully, null otherwise.</returns>
         public static async Task<ImageAttachment> CreateImageAttachment(byte[] image, IMessageContainer messageContainer)
         {
-            var request = messageContainer.Client.CreateRestRequest(ImageAttachment.GroupMeImageApiUrl, RestSharp.Method.POST);
+            var request = messageContainer.Client.CreateRawRestRequest(ImageAttachment.GroupMeImageApiUrl, RestSharp.Method.POST);
             request.AddParameter("image/jpeg", image, RestSharp.ParameterType.RequestBody);
 
             var cancellationTokenSource = new CancellationTokenSource();

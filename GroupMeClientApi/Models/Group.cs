@@ -165,7 +165,7 @@ namespace GroupMeClientApi.Models
         bool IAvatarSource.IsRoundedAvatar => false;
 
         /// <inheritdoc />
-        public ChatMessagesList.MessageListResponse.ReadReceipt ReadReceipt => null;
+        public ReadReceipt ReadReceipt => null;
 
         /// <summary>
         /// Returns a set of messages from a this Group Chat.
@@ -193,7 +193,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A list of <see cref="Message"/>.</returns>
         public async Task<ICollection<Message>> GetMessagesAsync(int limit, MessageRetreiveMode mode, string messageId)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/messages", Method.GET);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/messages", Method.GET);
             request.AddParameter("limit", limit);
             switch (mode)
             {
@@ -252,7 +252,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the send operation.</returns>
         public async Task<bool> SendMessage(Message message)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/messages", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/messages", Method.POST);
             var payload = new
             {
                 message,
@@ -283,7 +283,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> UpdateNickname(string name)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/memberships/update", Method.POST);
             var payload = new
             {
                 membership = new
@@ -319,7 +319,7 @@ namespace GroupMeClientApi.Models
                 imageUrl = imageAttachment.Url;
             }
 
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/memberships/update", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/memberships/update", Method.POST);
             var payload = new
             {
                 membership = new
@@ -343,7 +343,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> UpdateGroupName(string name)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/update", Method.POST);
             var payload = new
             {
                 name = name,
@@ -364,7 +364,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> UpdateGroupDescription(string description)
         {
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/update", Method.POST);
             var payload = new
             {
                 description = description,
@@ -396,7 +396,7 @@ namespace GroupMeClientApi.Models
                 imageUrl = imageAttachment.Url;
             }
 
-            var request = this.Client.CreateRestRequest($"/groups/{this.Id}/update", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/groups/{this.Id}/update", Method.POST);
             var payload = new
             {
                 image_url = imageUrl,
@@ -419,7 +419,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> MuteGroup(int? durationMinutes)
         {
-            var request = this.Client.CreateRestRequest($"{GroupMeClient.GroupMeAPIUrlV2}/groups/{this.Id}/memberships/mute", Method.POST);
+            var request = this.Client.CreateRestRequestV2($"/groups/{this.Id}/memberships/mute", Method.POST);
 
             var payload = new
             {
@@ -440,7 +440,7 @@ namespace GroupMeClientApi.Models
         /// <returns>A <see cref="bool"/> indicating the success of the change operation.</returns>
         public async Task<bool> UnMuteGroup()
         {
-            var request = this.Client.CreateRestRequest($"{GroupMeClient.GroupMeAPIUrlV2}/groups/{this.Id}/memberships/unmute", Method.POST);
+            var request = this.Client.CreateRestRequestV2($"/groups/{this.Id}/memberships/unmute", Method.POST);
             var payload = new
             {
             };

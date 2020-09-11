@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using GroupMeClientApi.Models;
@@ -15,21 +14,19 @@ namespace GroupMeClientApi
     public class GroupMeClient
     {
         /// <summary>
-        /// The URL to which GroupMe Read Receipt POSTs should be submitted.
+        /// The Base URL for GroupMe's V2 API endpoint.
         /// </summary>
-        internal const string GroupMeReadReceiptUrl = "https://v2.groupme.com/read_receipts";
+        private const string GroupMeAPIUrlV2 = "https://v2.groupme.com/";
 
         /// <summary>
-        /// The Base URL to for GroupMe's V2 API.
+        /// The Base URL for GroupMe's V3 API endpoint.
         /// </summary>
-        internal const string GroupMeAPIUrlV2 = "https://v2.groupme.com/";
+        private const string GroupMeAPIUrlV3 = "https://api.groupme.com/v3";
 
         /// <summary>
-        /// The Base URL for GroupMe's V4 API.
+        /// The Base URL for GroupMe's V4 API endpoint.
         /// </summary>
         private const string GroupMeAPIUrlV4 = "https://api.groupme.com/v4";
-
-        private const string GroupMeAPIUrl = "https://api.groupme.com/v3";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupMeClient"/> class to perform GroupMe API Operations.
@@ -50,14 +47,15 @@ namespace GroupMeClientApi
         public virtual ImageDownloader ImageDownloader { get; set; } = new ImageDownloader();
 
         /// <summary>
-        /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API calls.
+        /// Gets an enumeration of <see cref="Contact"/>s controlled by the API Client.
         /// </summary>
-        internal RestClient ApiClient { get; } = new RestClient(GroupMeAPIUrl);
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Contact"/>s.</returns>
+        public virtual IEnumerable<Contact> Contacts => this.ContactsList;
 
         /// <summary>
-        /// Gets or sets the authenticated user.
+        /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API calls.
         /// </summary>
-        internal Member Me { get; set; }
+        internal RestClient ApiClient { get; } = new RestClient();
 
         /// <summary>
         /// Gets the Auth Token used to authenticate a GroupMe API Call.
@@ -69,11 +67,26 @@ namespace GroupMeClientApi
         /// </summary>
         private Push.PushClient PushClient { get; set; }
 
+        /// <summary>
+        /// Gets or sets the internal cache of <see cref="Group"/>s that are tracked by this Client.
+        /// </summary>
         private List<Group> GroupsList { get; set; }
 
+        /// <summary>
+        /// Gets or sets the internal cache of <see cref="Chat"/>s that are tracked by this Client.
+        /// </summary>
         private List<Chat> ChatsList { get; set; }
 
+        /// <summary>
+        /// Gets or sets the internal cache of <see cref="Contact"/>s that are tracked by this Client.
+        /// </summary>
         private List<Contact> ContactsList { get; set; }
+
+        /// <summary>
+        /// Gets or sets the cached information returned from the GroupMe Identity endpoint
+        /// that uniquely identifies the currently authenticated user.
+        /// </summary>
+        private Member CachedMe { get; set; }
 
         /// <summary>
         /// Gets a enumeration of <see cref="Group"/>s controlled by the API Client.
@@ -104,12 +117,6 @@ namespace GroupMeClientApi
         }
 
         /// <summary>
-        /// Gets an enumeration of <see cref="Contact"/>s controlled by the API Client.
-        /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Contact"/>s.</returns>
-        public virtual IEnumerable<Contact> Contacts => this.ContactsList;
-
-        /// <summary>
         /// Returns a listing of all Group Chats a user is a member of.
         /// </summary>
         /// <returns>A list of <see cref="Group"/>.</returns>
@@ -117,7 +124,7 @@ namespace GroupMeClientApi
         {
             const int MaxPerPage = 500; // GroupMe allows 500 Groups/page
 
-            var request = this.CreateRestRequest($"/groups", Method.GET);
+            var request = this.CreateRestRequestV3($"/groups", Method.GET);
             request.AddParameter("per_page", MaxPerPage); // always all available groups.
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -159,7 +166,7 @@ namespace GroupMeClientApi
         {
             const int MaxPerPage = 100; // GroupMe allows 100 Chats/Page.
 
-            var request = this.CreateRestRequest($"/chats", Method.GET);
+            var request = this.CreateRestRequestV3($"/chats", Method.GET);
             request.AddParameter("per_page", MaxPerPage); // always all available chats.
 
             var cancellationTokenSource = new CancellationTokenSource();
@@ -271,21 +278,21 @@ namespace GroupMeClientApi
         /// <returns>A <see cref="Member"/>.</returns>
         public virtual Member WhoAmI(bool forceUpdate = false)
         {
-            if (this.Me != null && !forceUpdate)
+            if (this.CachedMe != null && !forceUpdate)
             {
-                return this.Me;
+                return this.CachedMe;
             }
 
-            var request = this.CreateRestRequest($"/users/me", Method.GET);
+            var request = this.CreateRestRequestV3($"/users/me", Method.GET);
 
             var restResponse = this.ApiClient.Execute(request);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var results = JsonConvert.DeserializeObject<MemberResponse>(restResponse.Content);
-                this.Me = results.Member;
+                this.CachedMe = results.Member;
 
-                return this.Me;
+                return this.CachedMe;
             }
             else
             {
@@ -314,7 +321,7 @@ namespace GroupMeClientApi
         /// <param name="resource">The GroupMe API resource to call.</param>
         /// <param name="method">The method used for the API Call.</param>
         /// <returns>A <see cref="RestRequest"/> with the user's access token.</returns>
-        internal RestRequest CreateRestRequest(string resource, Method method)
+        internal RestRequest CreateRawRestRequest(string resource, Method method)
         {
             var request = new RestRequest(resource, method)
             {
@@ -327,22 +334,39 @@ namespace GroupMeClientApi
         }
 
         /// <summary>
-        /// Creates a new <see cref="RestRequest"/> object to perform a GroupMe API v4 Call including the Authorization Token.
+        /// Creates a new <see cref="RestRequest"/> object to perform a GroupMe API Call to the V2 endpoint.
+        /// The generated request includes the Authorization Token.
+        /// </summary>
+        /// <param name="resource">The GroupMe API resource to call.</param>
+        /// <param name="method">The method used for the API Call.</param>
+        /// <returns>A <see cref="RestRequest"/> with the user's access token.</returns>
+        internal RestRequest CreateRestRequestV2(string resource, Method method)
+        {
+            return this.CreateRawRestRequest($"{GroupMeAPIUrlV2}{resource}", method);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RestRequest"/> object to perform a GroupMe API Call to the V3 endpoint.
+        /// The generated request includes the Authorization Token.
+        /// </summary>
+        /// <param name="resource">The GroupMe API resource to call.</param>
+        /// <param name="method">The method used for the API Call.</param>
+        /// <returns>A <see cref="RestRequest"/> with the user's access token.</returns>
+        internal RestRequest CreateRestRequestV3(string resource, Method method)
+        {
+            return this.CreateRawRestRequest($"{GroupMeAPIUrlV3}{resource}", method);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="RestRequest"/> object to perform a GroupMe API Call to the V4 endpoint.
+        /// The generated request includes the Authorization Token.
         /// </summary>
         /// <param name="resource">The GroupMe API resource to call.</param>
         /// <param name="method">The method used for the API Call.</param>
         /// <returns>A <see cref="RestRequest"/> with the user's access token.</returns>
         internal RestRequest CreateRestRequestV4(string resource, Method method)
         {
-            var url = GroupMeAPIUrlV4 + resource;
-            var request = new RestRequest(url, method)
-            {
-                JsonSerializer = JsonAdapter.Default,
-            };
-
-            request.AddHeader("X-Access-Token", this.AuthToken);
-
-            return request;
+            return this.CreateRawRestRequest($"{GroupMeAPIUrlV4}{resource}", method);
         }
     }
 }

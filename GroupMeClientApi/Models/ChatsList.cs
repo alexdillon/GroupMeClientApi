@@ -6,16 +6,16 @@ namespace GroupMeClientApi.Models
     /// <summary>
     /// <see cref="ChatsList"/> provides a list of Chats, along with additional status information.
     /// </summary>
-    public class ChatsList
+    internal class ChatsList
     {
         /// <summary>
-        /// Gets the list of Chats.
+        /// Gets or sets the list of Chats.
         /// </summary>
         [JsonProperty("response")]
         public IList<Chat> Chats { get; internal set; }
 
         /// <summary>
-        /// Gets the Metadata for the API Call.
+        /// Gets or sets the Metadata for the API Call.
         /// </summary>
         [JsonProperty("meta")]
         public Meta Meta { get; internal set; }

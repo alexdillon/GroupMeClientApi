@@ -56,7 +56,7 @@ namespace GroupMeClientApi.Models
         /// <summary>
         /// Gets the latest Read Receipt for this collection.
         /// </summary>
-        ChatMessagesList.MessageListResponse.ReadReceipt ReadReceipt { get; }
+        ReadReceipt ReadReceipt { get; }
 
         /// <summary>
         /// Sends a new message to this <see cref="IMessageContainer"/>.

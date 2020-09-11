@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -115,7 +113,7 @@ namespace GroupMeClientApi.Models
         public async Task<bool> BlockContact()
         {
             var me = this.Client.WhoAmI();
-            var request = this.Client.CreateRestRequest($"/blocks?user={this.Client.Me.Id}&otherUser={this.Id}", Method.POST);
+            var request = this.Client.CreateRestRequestV3($"/blocks?user={me.Id}&otherUser={this.Id}", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
             var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
@@ -130,7 +128,7 @@ namespace GroupMeClientApi.Models
         public async Task<bool> UnblockContact()
         {
             var me = this.Client.WhoAmI();
-            var request = this.Client.CreateRestRequest($"/blocks?user={this.Client.Me.Id}&otherUser={this.Id}", Method.DELETE);
+            var request = this.Client.CreateRestRequestV3($"/blocks?user={me.Id}&otherUser={this.Id}", Method.DELETE);
 
             var cancellationTokenSource = new CancellationTokenSource();
             var restResponse = await this.Client.ApiClient.ExecuteTaskAsync(request, cancellationTokenSource.Token);
