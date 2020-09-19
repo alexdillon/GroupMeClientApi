@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using GroupMeClientApi.Models;
@@ -53,14 +56,19 @@ namespace GroupMeClientApi
         public virtual IEnumerable<Contact> Contacts => this.ContactsList;
 
         /// <summary>
+        /// Gets the Auth Token used to authenticate a GroupMe API Call.
+        /// </summary>
+        internal string AuthToken { get; }
+
+        /// <summary>
         /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API calls.
         /// </summary>
         internal RestClient ApiClient { get; } = new RestClient();
 
         /// <summary>
-        /// Gets the Auth Token used to authenticate a GroupMe API Call.
+        /// Gets the <see cref="HttpClient"/> that is used for all raw HTTP connections.
         /// </summary>
-        internal string AuthToken { get; }
+        private HttpClient HttpClient { get; } = new HttpClient();
 
         /// <summary>
         /// Gets or sets the client used to subscribe to push notifications, if enabled.
@@ -367,6 +375,26 @@ namespace GroupMeClientApi
         internal RestRequest CreateRestRequestV4(string resource, Method method)
         {
             return this.CreateRawRestRequest($"{GroupMeAPIUrlV4}{resource}", method);
+        }
+
+        /// <summary>
+        /// Executes a REST request against the GroupMe API using HTTP POST.
+        /// Authentication parameteters are automatically included with the request.
+        /// </summary>
+        /// <param name="endPoint">The REST endpoint to connect to.</param>
+        /// <param name="requestBody">The body of the request.</param>
+        /// <param name="contentType">The content type of the request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to asychronously cancel the request.</param>
+        /// <param name="uploadProgress">A monitor object to receive status updates about the asychronous upload progress.</param>
+        /// <returns>The REST server response.</returns>
+        internal Task<HttpResponseMessage> ExecuteRestRequestAsync(string endPoint, byte[] requestBody, string contentType, CancellationToken cancellationToken, UploadProgress uploadProgress)
+        {
+            var content = new ProgressableBlockContent(requestBody, uploadProgress);
+            content.Headers.Add("X-Access-Token", this.AuthToken);
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+            content.Headers.ContentLength = requestBody.Length;
+
+            return this.HttpClient.PostAsync(new Uri(endPoint), content, cancellationToken);
         }
     }
 }
