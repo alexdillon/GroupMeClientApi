@@ -116,7 +116,7 @@ namespace GroupMeClientApi.Models
             var request = this.Client.CreateRestRequestV3($"/blocks?user={me.Id}&otherUser={this.Id}", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -131,7 +131,7 @@ namespace GroupMeClientApi.Models
             var request = this.Client.CreateRestRequestV3($"/blocks?user={me.Id}&otherUser={this.Id}", Method.DELETE);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await this.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await this.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }

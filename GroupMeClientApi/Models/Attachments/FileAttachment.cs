@@ -93,7 +93,7 @@ namespace GroupMeClientApi.Models.Attachments
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -119,7 +119,7 @@ namespace GroupMeClientApi.Models.Attachments
             var request = messageContainer.Client.CreateRawRestRequest(url, RestSharp.Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.RawBytes;
         }
@@ -138,7 +138,7 @@ namespace GroupMeClientApi.Models.Attachments
         private static async Task<FileUploadStatusResponse> CheckUploadStatus(string checkUrl, IMessageContainer messageContainer, CancellationTokenSource cancellationTokenSource)
         {
             var request = messageContainer.Client.CreateRawRestRequest(checkUrl, RestSharp.Method.GET);
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {

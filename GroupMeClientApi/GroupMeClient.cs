@@ -63,7 +63,7 @@ namespace GroupMeClientApi
         /// <summary>
         /// Gets the <see cref="RestClient"/> that is used to perform GroupMe API calls.
         /// </summary>
-        internal RestClient ApiClient { get; } = new RestClient();
+        private RestClient ApiClient { get; } = new RestClient();
 
         /// <summary>
         /// Gets the <see cref="HttpClient"/> that is used for all raw HTTP connections.
@@ -375,6 +375,18 @@ namespace GroupMeClientApi
         internal RestRequest CreateRestRequestV4(string resource, Method method)
         {
             return this.CreateRawRestRequest($"{GroupMeAPIUrlV4}{resource}", method);
+        }
+
+        /// <summary>
+        /// Executes a REST request against the GroupMe API.
+        /// Authentication parameteters are automatically included with the request.
+        /// </summary>
+        /// <param name="request">The request to execute.</param>
+        /// <param name="cancellationToken">A token to allow for cancellation of the <see cref="Task"/>.</param>
+        /// <returns>The response provided from the REST endpoint.</returns>
+        internal Task<IRestResponse> ExecuteRestRequestAsync(RestRequest request, CancellationToken cancellationToken)
+        {
+            return this.ApiClient.ExecuteAsync(request, cancellationToken);
         }
 
         /// <summary>
