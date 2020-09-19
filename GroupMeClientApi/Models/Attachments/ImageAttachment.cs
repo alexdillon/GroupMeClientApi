@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace GroupMeClientApi.Models.Attachments
 {
@@ -10,6 +11,11 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class ImageAttachment : Attachment
     {
+        /// <summary>
+        /// Gets the default buffer size, in bytes, used for uploading content.
+        /// </summary>
+        public static int DefaultUploadBlockSize => ProgressableBlockContent.DefaultBufferSize;
+
         /// <summary>
         /// Gets a listing of supported extension for GroupMe Image Attachments.
         /// </summary>
@@ -32,18 +38,23 @@ namespace GroupMeClientApi.Models.Attachments
         /// </summary>
         /// <param name="image">The image to upload.</param>
         /// <param name="messageContainer">The <see cref="IMessageContainer"/> that the message is being sent to.</param>
+        /// <param name="uploadProgress">A monitor that will receive progress updates for the image upload operation.</param>
         /// <returns>An <see cref="ImageAttachment"/> if uploaded successfully, null otherwise.</returns>
-        public static async Task<ImageAttachment> CreateImageAttachment(byte[] image, IMessageContainer messageContainer)
+        public static async Task<ImageAttachment> CreateImageAttachment(byte[] image, IMessageContainer messageContainer, UploadProgress uploadProgress = null)
         {
-            var request = messageContainer.Client.CreateRawRestRequest(ImageAttachment.GroupMeImageApiUrl, RestSharp.Method.POST);
-            request.AddParameter("image/jpeg", image, RestSharp.ParameterType.RequestBody);
+            uploadProgress = uploadProgress ?? new UploadProgress();
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(
+                GroupMeImageApiUrl,
+                image,
+                "image/jpeg",
+                cancellationTokenSource.Token,
+                uploadProgress);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var result = JsonConvert.DeserializeObject<ImageUploadResponse>(restResponse.Content);
+                var result = JsonConvert.DeserializeObject<ImageUploadResponse>(await restResponse.Content.ReadAsStringAsync());
 
                 return new ImageAttachment()
                 {

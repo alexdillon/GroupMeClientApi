@@ -196,7 +196,7 @@ namespace GroupMeClientApi.Models
             var request = groupmeClient.CreateRestRequestV3($"/messages/{conversationId}/{this.Id}/like", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await groupmeClient.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await groupmeClient.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }
@@ -213,7 +213,7 @@ namespace GroupMeClientApi.Models
             var request = groupmeClient.CreateRestRequestV3($"/messages/{conversationId}/{this.Id}/unlike", Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await groupmeClient.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await groupmeClient.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
         }

@@ -12,6 +12,11 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class FileAttachment : Attachment
     {
+        /// <summary>
+        /// Gets the default buffer size, in bytes, used for uploading content.
+        /// </summary>
+        public static int DefaultUploadBlockSize => ProgressableBlockContent.DefaultBufferSize;
+
         /// <inheritdoc/>
         [JsonProperty("type")]
         public override string Type { get; } = "file";
@@ -31,23 +36,22 @@ namespace GroupMeClientApi.Models.Attachments
         /// <param name="document">The document to upload.</param>
         /// <param name="messageContainer">The <see cref="IMessageContainer"/> that the message is being sent to.</param>
         /// <param name="cancellationTokenSource">The cancellation source to use for the upload operation.</param>
+        /// <param name="uploadProgress">A monitor that will receive progress updates for the file upload operation.</param>
         /// <returns>An <see cref="ImageAttachment"/> if uploaded successfully, null otherwise.</returns>
-        public static async Task<FileAttachment> CreateFileAttachment(string filename, byte[] document, IMessageContainer messageContainer, CancellationTokenSource cancellationTokenSource = null)
+        public static async Task<FileAttachment> CreateFileAttachment(string filename, byte[] document, IMessageContainer messageContainer, CancellationTokenSource cancellationTokenSource = null, UploadProgress uploadProgress = null)
         {
             cancellationTokenSource = cancellationTokenSource ?? new CancellationTokenSource();
+            uploadProgress = uploadProgress ?? new UploadProgress();
 
             var encodedFilename = System.Web.HttpUtility.UrlEncode(filename);
-            var url = GetGroupMeFileApiBaseUrl(messageContainer.Messages.First()) + $"/files/?name={encodedFilename}";
+            var url = GetGroupMeFileApiBaseUrl(messageContainer.Messages.First()) + $"/files?name={encodedFilename}";
             var mimeType = GroupMeDocumentMimeTypeMapper.ExtensionToMimeType(System.IO.Path.GetExtension(filename));
 
-            var request = messageContainer.Client.CreateRawRestRequest(url, RestSharp.Method.POST);
-            request.AddParameter(mimeType, document, RestSharp.ParameterType.RequestBody);
-
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(url, document, mimeType, cancellationTokenSource.Token, uploadProgress);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                var result = JsonConvert.DeserializeObject<FileUploadResponse>(restResponse.Content);
+                var result = JsonConvert.DeserializeObject<FileUploadResponse>(await restResponse.Content.ReadAsStringAsync());
                 var finishedFileId = string.Empty;
                 while (!cancellationTokenSource.IsCancellationRequested)
                 {
@@ -89,7 +93,7 @@ namespace GroupMeClientApi.Models.Attachments
             request.AddJsonBody(payload);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -115,7 +119,7 @@ namespace GroupMeClientApi.Models.Attachments
             var request = messageContainer.Client.CreateRawRestRequest(url, RestSharp.Method.POST);
 
             var cancellationTokenSource = new CancellationTokenSource();
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.RawBytes;
         }
@@ -134,7 +138,7 @@ namespace GroupMeClientApi.Models.Attachments
         private static async Task<FileUploadStatusResponse> CheckUploadStatus(string checkUrl, IMessageContainer messageContainer, CancellationTokenSource cancellationTokenSource)
         {
             var request = messageContainer.Client.CreateRawRestRequest(checkUrl, RestSharp.Method.GET);
-            var restResponse = await messageContainer.Client.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            var restResponse = await messageContainer.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
