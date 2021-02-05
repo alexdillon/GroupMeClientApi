@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk" InitialTargets="SetVersion">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.8</Version>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Authors>Alex Dillon</Authors>
     <Company>MicroCube Software</Company>
     <Description>GroupMeClientApi provides a C# API Client for interacting with GroupMe</Description>
@@ -41,6 +41,10 @@
   
   <ItemGroup>
     <PackageReference Include="Bayeux2" Version="1.0.0" />
+    <PackageReference Include="gitinfo" Version="2.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="JsonSubTypes" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="RestSharp" Version="106.11.4" />
@@ -64,5 +68,17 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+
+  <Target Name="SetVersion" DependsOnTargets="GitVersion">
+    <PropertyGroup>
+      <!-- CI checkouts may be against a specific commit, not a branch, so add -pr as label -->
+      <GitSemVerDashLabel Condition="'$(GitBranch)' == 'undefined'">$(GitSemVerDashLabel)-pr</GitSemVerDashLabel>
+      <!-- If there's no label, but we're not at the tip of the base version, add a -pre because this is not the base build -->
+      <GitSemVerDashLabel Condition="'$(GitSemVerDashLabel)' == '' And '$(GitCommits)' != '0'">-pre</GitSemVerDashLabel>
+      <PackageVersion Condition="'$(GitSemVerDashLabel)' == ''">$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)</PackageVersion>
+      <PackageVersion Condition="'$(GitSemVerDashLabel)' != ''">$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)$(GitSemVerDashLabel).$(GitCommits)</PackageVersion>
+      <AssemblyVersion>$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)</AssemblyVersion>
+    </PropertyGroup>
+  </Target>
 
 </Project>
