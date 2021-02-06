@@ -1,0 +1,31 @@
+name: Publish Docs
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+      
+jobs:
+  pub_docs_job:
+    runs-on: ubuntu-latest
+    name: A job to build the DocFX documentation
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Copy README into DocFX folder
+      run: cp README.md docs/index.md
+      shell: bash
+    
+    - uses: nikeee/docfx-action@v1.0.0
+      name: Build Documentation
+      with:
+        args: docs/docfx.json
+
+    # Publish generated site using GitHub Pages
+    - uses: maxheld83/ghpages@master
+      name: Publish Documentation on GitHub Pages
+      env:
+        BUILD_DIR: docs/_site # docfx's default output directory is _site
+        GH_PAT: ${{ secrets.GH_PAGES }} # See https://github.com/maxheld83/ghpages

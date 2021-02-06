@@ -1,0 +1,41 @@
+{
+  "metadata": [
+   {
+      "src": [
+        {
+          "files": [ "**.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**", "externals/**" ],
+          "src": "../"
+        }
+      ],
+      "dest": "obj/api",
+      "filter": "filter.yml",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false,
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "**/*.yml" ],
+        "src": "obj/api",
+        "dest": "api"
+      },
+      {
+        "files": [ "articles/**/*.md", "*.md", "toc.yml", "../README.md" ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [ "articles/images/**"]
+      }
+    ],
+    "globalMetadata": {
+      "_appTitle": "GroupMe Client API for C# Documentation",
+      "_enableSearch": true
+    },
+    "markdownEngineName": "markdig",
+    "dest": "_site",
+    "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
+  }
+}

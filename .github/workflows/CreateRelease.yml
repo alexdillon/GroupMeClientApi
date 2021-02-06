@@ -1,0 +1,49 @@
+name: CreateRelease
+
+on:
+  push:
+    tags:
+      - "v*"
+ 
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.100
+
+    - name: Build
+      run: dotnet build --configuration Release
+      working-directory: ./
+      
+    - name: Generate nuget package
+      run: dotnet pack GroupMeClientApi --configuration Release -o nupkg
+      working-directory: ./
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      shell: bash
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: GroupMe Client API ${{ github.ref }}
+        draft: false
+        prerelease: true
+
+    - name: Upload Assets to Release with a wildcard
+      uses: csexton/release-asset-action@v2
+      with:
+        pattern: "nupkg/*"
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        release-url: ${{ steps.create_release.outputs.upload_url }}
