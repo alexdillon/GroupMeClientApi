@@ -1,0 +1,18 @@
+apiRules:
+- exclude:
+    # inherited Object methods
+    uidRegex: ^System\.Object\..*$
+    type: Method
+- exclude:
+    # mentioning types from System.* namespace
+    uidRegex: ^System\..*$
+    type: Type
+- exclude:
+    # mentioning types from System.* namespace
+    uidRegex: ^Microsoft.EntityFrameworkCore\..*$
+    type: Type
+    
+- exclude:
+    # mentioning types from Galasoft.* namespace
+    uidRegex: ^GalaSoft.MvvmLight\..*$
+    type: Type
