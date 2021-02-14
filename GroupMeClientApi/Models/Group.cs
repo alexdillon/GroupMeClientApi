@@ -142,7 +142,12 @@ namespace GroupMeClientApi.Models
         {
             get
             {
-                var msg = new Message()
+                if (this.MsgPreview == null)
+                {
+                    return null;
+                }
+
+                return new Message()
                 {
                     Attachments = this.MsgPreview.Preview.Attachments,
                     Text = this.MsgPreview.Preview.Text,
@@ -150,13 +155,11 @@ namespace GroupMeClientApi.Models
                     CreatedAtUnixTime = this.MsgPreview.LastMessageCreatedAtUnixTime,
                     Id = this.MsgPreview.LastMessageId,
                 };
-
-                return msg;
             }
         }
 
         /// <inheritdoc />
-        public int TotalMessageCount => this.MsgPreview.Count;
+        public int TotalMessageCount => this.MsgPreview?.Count ?? 0;
 
         /// <inheritdoc />
         string IAvatarSource.ImageOrAvatarUrl => this.ImageUrl;
@@ -451,6 +454,17 @@ namespace GroupMeClientApi.Models
             var restResponse = await this.Client.ExecuteRestRequestAsync(request, cancellationTokenSource.Token);
 
             return restResponse.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        /// <summary>
+        /// Associates this <see cref="Group"/> with a GroupMe Client to perform API operations. <see cref="Group"/>s that
+        /// are created from sources other than a <see cref="GroupMeClient"/>, such as from deserialization, are unassociated
+        /// and not fully functional.
+        /// </summary>
+        /// <param name="client">The GroupMe Client to associate this <see cref="Group"/> with.</param>
+        public void AssociateWithClient(GroupMeClient client)
+        {
+            this.Client = client;
         }
 
         /// <summary>
