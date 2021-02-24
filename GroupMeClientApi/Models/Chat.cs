@@ -12,12 +12,24 @@ namespace GroupMeClientApi.Models
     /// </summary>
     public class Chat : IMessageContainer, IAvatarSource
     {
+        private Message latestMessage;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Chat"/> class.
         /// </summary>
         public Chat()
         {
             this.Messages = new List<Message>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat"/> class.
+        /// </summary>
+        /// <param name="conversationId">The conversation ID for this chat.</param>
+        public Chat(string conversationId)
+            : base()
+        {
+            this.ConversationId = conversationId;
         }
 
         /// <summary>
@@ -59,14 +71,6 @@ namespace GroupMeClientApi.Models
         /// Note that API Operations, like <see cref="Message.LikeMessage"/> cannot be performed.
         /// See <see cref="Messages"/> list instead for full message objects.
         /// </summary>
-        [JsonProperty("last_message")]
-        public Message LatestMessage { get; internal set; }
-
-        /// <summary>
-        /// Gets a copy of the latest message for preview purposes.
-        /// Note that API Operations, like <see cref="Message.LikeMessage"/> cannot be performed.
-        /// See <see cref="Messages"/> list instead for full message objects.
-        /// </summary>
         [JsonProperty("messages_count")]
         public int TotalMessageCount { get; internal set; }
 
@@ -81,6 +85,31 @@ namespace GroupMeClientApi.Models
         public List<Message> Messages { get; internal set; }
 
         /// <summary>
+        /// Gets a copy of the latest message for preview purposes.
+        /// Note that API Operations, like <see cref="Message.LikeMessage"/> cannot be performed.
+        /// See <see cref="Messages"/> list instead for full message objects.
+        /// </summary>
+        [JsonProperty("last_message")]
+        public Message LatestMessage
+        {
+            get => this.latestMessage;
+            internal set
+            {
+                this.latestMessage = value;
+                if (!string.IsNullOrEmpty(this.LatestMessage?.ConversationId))
+                {
+                    this.ConversationId = this.LatestMessage.ConversationId;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the conversation ID for this chat. The conversation ID identifies both users
+        /// in the <see cref="Chat"/>, and matches <see cref="Message.ConversationId"/>.
+        /// </summary>
+        public string ConversationId { get; internal set; }
+
+        /// <summary>
         /// Gets the <see cref="GroupMeClient"/> that manages this <see cref="Chat"/>.
         /// </summary>
         public GroupMeClient Client { get; internal set; }
@@ -89,10 +118,10 @@ namespace GroupMeClientApi.Models
         public ReadReceipt ReadReceipt { get; private set; }
 
         /// <inheritdoc />
-        public string ImageOrAvatarUrl => ((IAvatarSource)this.OtherUser).ImageOrAvatarUrl;
+        public string ImageOrAvatarUrl => ((IAvatarSource)this.OtherUser)?.ImageOrAvatarUrl;
 
         /// <inheritdoc />
-        public bool IsRoundedAvatar => ((IAvatarSource)this.OtherUser).IsRoundedAvatar;
+        public bool IsRoundedAvatar => true;
 
         /// <summary>
         /// Returns a set of messages from a this Direct Message / Chat.
@@ -219,6 +248,17 @@ namespace GroupMeClientApi.Models
         public Member WhoAmI()
         {
             return this.Client.WhoAmI();
+        }
+
+        /// <summary>
+        /// Associates this <see cref="Chat"/> with a GroupMe Client to perform API operations. <see cref="Chat"/>s that
+        /// are created from sources other than a <see cref="GroupMeClient"/>, such as from deserialization, are unassociated
+        /// and not fully functional.
+        /// </summary>
+        /// <param name="client">The GroupMe Client to associate this <see cref="Chat"/> with.</param>
+        public void AssociateWithClient(GroupMeClient client)
+        {
+            this.Client = client;
         }
     }
 }
