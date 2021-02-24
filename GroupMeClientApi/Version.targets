@@ -12,10 +12,6 @@
     </Target>
     <Target Name="SetVersion" DependsOnTargets="GitVersion">
         <PropertyGroup>
-            <!-- CI checkouts may be against a specific commit, not a branch, so add -pr as label -->
-            <GitSemVerDashLabel Condition="'$(GitBranch)' == 'undefined'">$(GitSemVerDashLabel)-pr</GitSemVerDashLabel>
-            <!-- If there's no label, but we're not at the tip of the base version, add a -pre because this is not the base build -->
-            <GitSemVerDashLabel Condition="'$(GitSemVerDashLabel)' == '' And '$(GitCommits)' != '0'">-pre</GitSemVerDashLabel>
             <PackageVersion Condition="'$(GitSemVerDashLabel)' == ''">$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)</PackageVersion>
             <PackageVersion Condition="'$(GitSemVerDashLabel)' != ''">$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)$(GitSemVerDashLabel).$(GitCommits)</PackageVersion>
             <AssemblyVersion>$(GitBaseVersionMajor).$(GitBaseVersionMinor).$(GitBaseVersionPatch)</AssemblyVersion>
