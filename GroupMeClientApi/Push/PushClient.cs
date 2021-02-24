@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using Bayeux;
 using GroupMeClientApi.Models;
+using GroupMeClientApi.Push.Bayeux;
 using Newtonsoft.Json;
 
 namespace GroupMeClientApi.Push
@@ -24,15 +23,7 @@ namespace GroupMeClientApi.Push
         public PushClient(GroupMeClient client)
         {
             this.Client = client;
-
-            var endpoint = new Uri(this.GroupMePushServerUrl);
-            var settings = new BayeuxClientSettings(endpoint)
-            {
-                Logger = new Bayeux.Diagnostics.ConsoleLogger(),
-            };
-
-            // Create the client.
-            this.BayeuxClient = new BayeuxClient(settings);
+            this.BayeuxClient = new BayeuxClient(this.GroupMePushServerUrl, this.Client.AuthToken);
         }
 
         /// <summary>
@@ -44,27 +35,15 @@ namespace GroupMeClientApi.Push
 
         private BayeuxClient BayeuxClient { get; set; }
 
-        private CancellationTokenSource CancellationTokenSource { get; } = new CancellationTokenSource();
-
-        private Task MonitorConnectionTask { get; set; }
-
-        private Timer RenewalTimer { get; set; }
-
         private string GroupMePushServerUrl => "https://push.groupme.com/faye";
-
-        private TimeSpan MaxConnectionInterval => TimeSpan.FromMinutes(50);
-
-        private List<Group> SubscribedGroups { get; } = new List<Group>();
 
         /// <summary>
         /// Connects to the GroupMe Server to prepare for receiving notifications.
         /// </summary>
         public void Connect()
         {
-            if (this.MonitorConnectionTask == null || this.MonitorConnectionTask.IsCanceled || this.MonitorConnectionTask.IsCompleted)
-            {
-                this.MonitorConnectionTask = Task.Run(this.MonitorConnection, this.CancellationTokenSource.Token);
-            }
+            _ = this.AddSubscriptionMe();
+            this.BayeuxClient.Connect();
         }
 
         /// <summary>
@@ -76,27 +55,12 @@ namespace GroupMeClientApi.Push
         {
             if (container is Group g)
             {
-                await this.SubscribeGroupAsync(g);
+                await this.AddSubscriptionGroup(g);
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine($"Subscribe not supported for name={container.Name}");
+                Debug.WriteLine($"Subscribe not supported for name={container.Name}");
             }
-        }
-
-        /// <summary>
-        /// Subscribes to push notifications for a specific <see cref="Group"/>.
-        /// </summary>
-        /// <param name="group">The Group to receive notifications for.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        public async Task SubscribeGroupAsync(Group group)
-        {
-            if (!this.SubscribedGroups.Contains(group))
-            {
-                this.SubscribedGroups.Add(group);
-            }
-
-            await this.SendGroupSubscriptionRequestAsync(group);
         }
 
         /// <summary>
@@ -107,114 +71,38 @@ namespace GroupMeClientApi.Push
         {
             if (container is Group g)
             {
-                this.UnsubscribeGroup(g);
+                this.BayeuxClient.Unsubscribe($"/group/{g.Id}");
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine($"Unsubscribe not supported for name={container.Name}");
-            }
-        }
-
-        /// <summary>
-        /// Unsubscribes from push notifications for a specific <see cref="Group"/>.
-        /// </summary>
-        /// <param name="group">The Group to unsubscribe from receiving notifications for.</param>
-        public void UnsubscribeGroup(Group group)
-        {
-            if (this.SubscribedGroups.Contains(group))
-            {
-                this.SubscribedGroups.Remove(group);
+                Debug.WriteLine($"Unsubscribe not supported for name={container.Name}");
             }
         }
 
         /// <summary>
         /// Subscribes to all push notifications for the current user.
         /// </summary>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        private async Task SubscribeMeAsync()
+        private async Task<bool> AddSubscriptionMe()
         {
-            var extensions = new Dictionary<string, object>
-            {
-                { "access_token", this.Client.AuthToken },
-                { "timestamp", DateTime.Now.ToUniversalTime().ToBinary().ToString() },
-            };
-
             var me = this.Client.WhoAmI();
-
-            // Subscribe to channel.
-            await this.BayeuxClient.Subscribe(
-                $"/user/{me.Id}",
-                this.MeCallback,
-                extensions);
+            return await this.BayeuxClient.Subscribe($"/user/{me.Id}", (json) => this.MeCallback(json));
         }
 
         /// <summary>
         /// Sends a Bayeux command requesting push notifications for a specific <see cref="Group"/>.
         /// </summary>
         /// <param name="group">The Group to receive notifications for.</param>
-        /// <returns>A <see cref="Task"/> representing the result of the asynchronous operation.</returns>
-        private async Task SendGroupSubscriptionRequestAsync(Group group)
+        private async Task<bool> AddSubscriptionGroup(Group group)
         {
-            var extensions = new Dictionary<string, object>
-            {
-                { "access_token", this.Client.AuthToken },
-                { "timestamp", DateTime.Now.ToUniversalTime().ToBinary().ToString() },
-            };
-
             // Subscribe to channel.
-            await this.BayeuxClient.Subscribe(
-                $"/group/{group.Id}",
-                (m) => this.GroupCallback(group, m),
-                extensions);
+            return await this.BayeuxClient.Subscribe($"/group/{group.Id}", (json) => this.GroupCallback(group, json));
         }
 
-        private async Task MonitorConnection()
+        private void GroupCallback(Group group, string jsonString)
         {
-            while (!this.CancellationTokenSource.IsCancellationRequested)
-            {
-                if (!this.BayeuxClient.IsHeartbeatConnected)
-                {
-                    try
-                    {
-                        this.RenewalTimer?.Dispose();
-
-                        this.BayeuxClient?.Disconnect();
-                        await this.BayeuxClient.Connect();
-                        await this.SubscribeMeAsync();
-
-                        foreach (var group in this.SubscribedGroups)
-                        {
-                            await this.SendGroupSubscriptionRequestAsync(group);
-                        }
-
-                        this.RenewalTimer = new Timer(
-                            new TimerCallback((a) => this.BayeuxClient.Disconnect()),
-                            null,
-                            this.MaxConnectionInterval,
-                            this.MaxConnectionInterval);
-                    }
-                    catch (Exception)
-                    {
-                        // wait a while before trying to reconnect again
-                        await Task.Delay(TimeSpan.FromMilliseconds(500));
-                    }
-                }
-                else
-                {
-                    // connected fine, wait a while before checking again
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                }
-
-                this.CancellationTokenSource.Token.ThrowIfCancellationRequested();
-            }
-        }
-
-        private void GroupCallback(Group group, IBayeuxMessage message)
-        {
-            var jsonString = message.Data.ToString();
             var notification = JsonConvert.DeserializeObject<Notifications.Notification>(jsonString);
 
-            Console.WriteLine($"Received {message.Data.ToString()} for {group.Name}");
+            Console.WriteLine($"Received {jsonString} for {group.Name}");
 
             try
             {
@@ -223,16 +111,15 @@ namespace GroupMeClientApi.Push
             }
             catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine("Error handling callback for 'Group' notification");
+                Debug.WriteLine("Error handling callback for 'Group' notification");
             }
         }
 
-        private void MeCallback(IBayeuxMessage message)
+        private void MeCallback(string jsonString)
         {
-            var jsonString = message.Data.ToString();
             var notification = JsonConvert.DeserializeObject<Notifications.Notification>(jsonString);
 
-            Console.WriteLine($"Received {message.Data.ToString()} for ME! at {System.DateTime.Now.ToShortTimeString()}");
+            Console.WriteLine($"Received {jsonString} for ME! at {DateTime.Now.ToShortTimeString()}");
 
             try
             {
@@ -241,7 +128,7 @@ namespace GroupMeClientApi.Push
             }
             catch (Exception)
             {
-                System.Diagnostics.Debug.WriteLine("Error handling callback for 'Me' notification");
+                Debug.WriteLine("Error handling callback for 'Me' notification");
             }
         }
     }

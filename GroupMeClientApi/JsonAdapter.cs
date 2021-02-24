@@ -12,7 +12,7 @@ namespace GroupMeClientApi
     /// <see cref="JsonAdapter"/> provides a wrapper for <see cref="JsonSerializer"/> to match the <see cref="ISerializer"/> and <see cref="IDeserializer"/> interfaces.
     /// </summary>
     /// <remarks>
-    /// Adapted from Adapted from https://bytefish.de/blog/restsharp_custom_json_serializer/.
+    /// Adapted from https://bytefish.de/blog/restsharp_custom_json_serializer/.
     /// </remarks>
     public class JsonAdapter : ISerializer, IDeserializer
     {
