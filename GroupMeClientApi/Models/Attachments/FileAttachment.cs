@@ -13,12 +13,18 @@ namespace GroupMeClientApi.Models.Attachments
     public class FileAttachment : Attachment
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="FileAttachment"/> class.
+        /// </summary>
+        internal FileAttachment()
+        {
+        }
+
+        /// <summary>
         /// Gets the default buffer size, in bytes, used for uploading content.
         /// </summary>
         public static int DefaultUploadBlockSize => ProgressableBlockContent.DefaultBufferSize;
 
         /// <inheritdoc/>
-        [JsonProperty("type")]
         public override string Type { get; } = "file";
 
         /// <summary>
