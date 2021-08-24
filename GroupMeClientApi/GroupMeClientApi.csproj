@@ -46,7 +46,7 @@
     </PackageReference>
     <PackageReference Include="JsonSubTypes" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="RestSharp" Version="106.11.4" />
+    <PackageReference Include="RestSharp" Version="106.12.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
