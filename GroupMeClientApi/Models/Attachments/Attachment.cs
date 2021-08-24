@@ -19,8 +19,16 @@ namespace GroupMeClientApi.Models.Attachments
     public class Attachment
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="Attachment"/> class.
+        /// </summary>
+        internal Attachment()
+        {
+        }
+
+        /// <summary>
         /// Gets the attachment type.
         /// </summary>
+        [JsonProperty("type")]
         public virtual string Type { get; }
     }
 }

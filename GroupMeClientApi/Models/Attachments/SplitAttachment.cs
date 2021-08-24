@@ -7,6 +7,13 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class SplitAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SplitAttachment"/> class.
+        /// </summary>
+        internal SplitAttachment()
+        {
+        }
+
         /// <inheritdoc/>
         public override string Type { get; } = "split";
 

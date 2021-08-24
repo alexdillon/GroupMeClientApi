@@ -8,6 +8,13 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class EmojiAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EmojiAttachment"/> class.
+        /// </summary>
+        internal EmojiAttachment()
+        {
+        }
+
         /// <inheritdoc/>
         public override string Type { get; } = "emoji";
 

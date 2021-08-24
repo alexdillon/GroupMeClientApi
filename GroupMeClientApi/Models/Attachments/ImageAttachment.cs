@@ -12,6 +12,13 @@ namespace GroupMeClientApi.Models.Attachments
     public class ImageAttachment : Attachment
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImageAttachment"/> class.
+        /// </summary>
+        internal ImageAttachment()
+        {
+        }
+
+        /// <summary>
         /// Gets the default buffer size, in bytes, used for uploading content.
         /// </summary>
         public static int DefaultUploadBlockSize => ProgressableBlockContent.DefaultBufferSize;
@@ -22,7 +29,6 @@ namespace GroupMeClientApi.Models.Attachments
         public static IEnumerable<string> SupportedExtensions { get; } = new List<string>() { ".png", ".jpg", ".jpeg", ".gif", ".bmp" };
 
         /// <inheritdoc/>
-        [JsonProperty("type")]
         public override string Type { get; } = "image";
 
         /// <summary>

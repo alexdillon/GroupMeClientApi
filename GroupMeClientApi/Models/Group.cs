@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using GroupMeClientApi.Models.Attachments;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -149,7 +150,7 @@ namespace GroupMeClientApi.Models
 
                 return new Message()
                 {
-                    Attachments = this.MsgPreview.Preview.Attachments,
+                    Attachments = new List<Attachment>(this.MsgPreview.Preview.Attachments),
                     Text = this.MsgPreview.Preview.Text,
                     Name = this.MsgPreview.Preview.Nickname,
                     CreatedAtUnixTime = this.MsgPreview.LastMessageCreatedAtUnixTime,

@@ -7,8 +7,14 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class LinkedImageAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinkedImageAttachment"/> class.
+        /// </summary>
+        internal LinkedImageAttachment()
+        {
+        }
+
         /// <inheritdoc/>
-        [JsonProperty("type")]
         public override string Type { get; } = "linked_image";
 
         /// <summary>

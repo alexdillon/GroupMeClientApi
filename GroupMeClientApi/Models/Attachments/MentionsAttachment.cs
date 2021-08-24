@@ -8,6 +8,13 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class MentionsAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MentionsAttachment"/> class.
+        /// </summary>
+        internal MentionsAttachment()
+        {
+        }
+
         /// <inheritdoc/>
         public override string Type { get; } = "mentions";
 

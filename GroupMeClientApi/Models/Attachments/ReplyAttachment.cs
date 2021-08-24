@@ -7,6 +7,13 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class ReplyAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReplyAttachment"/> class.
+        /// </summary>
+        internal ReplyAttachment()
+        {
+        }
+
         /// <inheritdoc/>
         public override string Type { get; } = "reply";
 
@@ -27,5 +34,20 @@ namespace GroupMeClientApi.Models.Attachments
         /// </summary>
         [JsonProperty("base_reply_id")]
         public string BaseRepliedMessageId { get; internal set; }
+
+        /// <summary>
+        /// Creates a new attachment indicating that a message is being sent in reply to an
+        /// existing message.
+        /// </summary>
+        /// <param name="replyToMessage">The existing message that is being replied to.</param>
+        /// <returns>A new reply attachment.</returns>
+        public static ReplyAttachment CreateReplyAttachment(Message replyToMessage)
+        {
+            return new ReplyAttachment()
+            {
+                BaseRepliedMessageId = replyToMessage.Id,
+                RepliedMessageId = replyToMessage.Id,
+            };
+        }
     }
 }

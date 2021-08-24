@@ -7,8 +7,14 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class VideoAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VideoAttachment"/> class.
+        /// </summary>
+        internal VideoAttachment()
+        {
+        }
+
         /// <inheritdoc/>
-        [JsonProperty("type")]
         public override string Type { get; } = "video";
 
         /// <summary>
