@@ -7,6 +7,13 @@ namespace GroupMeClientApi.Models.Attachments
     /// </summary>
     public class LocationAttachment : Attachment
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationAttachment"/> class.
+        /// </summary>
+        internal LocationAttachment()
+        {
+        }
+
         /// <inheritdoc/>
         public override string Type { get; } = "location";
 
