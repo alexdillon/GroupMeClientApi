@@ -13,6 +13,8 @@
 
 Find [GroupMeClientApi](https://www.nuget.org/packages/GroupMeClientApi/) on NuGet.
 
+Find [Documentation here](https://alexdillon.github.io/GroupMeClientApi/).
+
 ### Sample
 ```csharp
 var client = new GroupMeClientApi.GroupMeClient("YOUR_API_TOKEN HERE");
