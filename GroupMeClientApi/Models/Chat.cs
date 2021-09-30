@@ -152,7 +152,7 @@ namespace GroupMeClientApi.Models
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<ChatMessagesList>(restResponse.Content);
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<ChatMessageList>>(restResponse.Content);
 
                 this.ReadReceipt = results.Response.LastReadReceipt;
 

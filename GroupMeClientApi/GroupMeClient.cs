@@ -139,9 +139,10 @@ namespace GroupMeClientApi
             var restResponse = await this.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<GroupsList>(restResponse.Content);
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<IList<Group>>>(restResponse.Content);
+                var groupsList = results.Response;
 
-                foreach (var group in results.Groups)
+                foreach (var group in groupsList)
                 {
                     // ensure every Group has a reference to the parent client (this)
                     group.Client = this;
@@ -158,7 +159,7 @@ namespace GroupMeClientApi
                     }
                 }
 
-                return results.Groups;
+                return groupsList;
             }
             else
             {
@@ -182,9 +183,10 @@ namespace GroupMeClientApi
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<ChatsList>(restResponse.Content);
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<IList<Chat>>>(restResponse.Content);
+                var chatsList = results.Response;
 
-                foreach (var chat in results.Chats)
+                foreach (var chat in chatsList)
                 {
                     // ensure every Chat has a reference to the parent client (this)
                     chat.Client = this;
@@ -204,7 +206,7 @@ namespace GroupMeClientApi
                     }
                 }
 
-                return results.Chats;
+                return chatsList;
             }
             else
             {
@@ -235,9 +237,10 @@ namespace GroupMeClientApi
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<ContactsList>(restResponse.Content);
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<IList<Contact>>>(restResponse.Content);
+                var contactsList = results.Response;
 
-                foreach (var contact in results.Contacts)
+                foreach (var contact in contactsList)
                 {
                     var oldContact = this.ContactsList.Find(c => c.Id == contact.Id);
                     if (oldContact == null)
@@ -252,7 +255,7 @@ namespace GroupMeClientApi
                     contact.Client = this;
                 }
 
-                return results.Contacts;
+                return contactsList;
             }
             else
             {
@@ -297,8 +300,8 @@ namespace GroupMeClientApi
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<MemberResponse>(restResponse.Content);
-                this.CachedMe = results.Member;
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<Member>>(restResponse.Content);
+                this.CachedMe = results.Response;
 
                 return this.CachedMe;
             }

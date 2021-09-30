@@ -219,7 +219,7 @@ namespace GroupMeClientApi.Models
 
             if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                var results = JsonConvert.DeserializeObject<GroupMessagesList>(restResponse.Content);
+                var results = JsonConvert.DeserializeObject<ResponseWrapper<GroupMessageList>>(restResponse.Content);
 
                 foreach (var message in results.Response.Messages)
                 {
