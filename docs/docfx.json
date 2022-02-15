@@ -27,15 +27,25 @@
     ],
     "resource": [
       {
-        "files": [ "articles/images/**"]
+        "files": [ 
+			"articles/images/**",
+			"images/**"
+		]
+		
       }
     ],
     "globalMetadata": {
       "_appTitle": "GroupMe Client API for C# Documentation",
-      "_enableSearch": true
+      
+      "_appLogoPath": "images/gmcapi-logo.png",
+      "_gitContribute": {
+        "repo": "https://github.com/alexdillon/GroupMeClientApi/",
+        "branch": "develop"
+      }
     },
-    "markdownEngineName": "markdig",
+    "markdownEngineName": "dfm-latest",
     "dest": "_site",
+  	"template": ["templates/prism_modified"],
     "xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ]
   }
 }
