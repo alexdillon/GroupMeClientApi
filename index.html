@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>GroupMeClientApi - C# Client for the GroupMe API | GroupMe Client API for C# Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="GroupMeClientApi - C# Client for the GroupMe API | GroupMe Client API for C# Documentation ">
+    <meta name="generator" content="docfx 2.56.7.0">
+    
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/docfx.vendor.css">
+    <link rel="stylesheet" href="styles/docfx.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/affix.css">
+    <meta property="docfx:navrel" content="toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="index.html">
+                <img id="logo" class="svg" src="images/gmcapi-logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+                <ul class="nav level1 navbar-nav">
+                  <li class="active">
+                    <a href="index.html" title="Home" class="active">Home</a>
+                  </li>
+                  <li class="">
+                    <a href="api/GroupMeClientApi.html" title="API Documentation" class="">API Documentation</a>
+                  </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        <div class="article row grid">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="groupmeclientapi---c-client-for-the-groupme-api">GroupMeClientApi - C# Client for the GroupMe API</h1>
+
+<h3 id="license-apache-license-20">License: Apache License 2.0</h3>
+<h3 id="features">Features</h3>
+<ul>
+<li>Groups and Chats (Direct Messages) supported</li>
+<li>Send and receive messages</li>
+<li>Push Notification support</li>
+<li>Support for the GroupMe Image API</li>
+<li>Support for GroupMe Attachments (Images, Linked Images, Mentions, Locations, Emojis, and Videos)</li>
+<li>OAuth authentication support</li>
+<li>Cross Platform, targetting .NET Standard 2.0.</li>
+</ul>
+<p>Find <a href="https://www.nuget.org/packages/GroupMeClientApi/">GroupMeClientApi</a> on NuGet.</p>
+<p>Find <a href="https://alexdillon.github.io/GroupMeClientApi/">Documentation Here</a>.</p>
+<h3 id="sample">Sample</h3>
+<pre><code class="lang-csharp">var client = new GroupMeClientApi.GroupMeClient(&quot;YOUR_API_TOKEN HERE&quot;);
+
+await client.GetGroupsAsync();
+await client.GetChatsAsync();
+
+foreach (IMessageContainer messageContainer in Enumerable.Concat&lt;IMessageContainer&gt;(client.Groups(), client.Chats()))
+{
+    Console.WriteLine($&quot;{messageContainer.Name} - Updated {messageContainer.UpdatedAtTime.ToString()}&quot;);
+}
+</code></pre></article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix" style="margin-top: 0px;">
+              <div class="connect-widget">
+                <ul class="connect-links">
+          		<li id="connect-github">
+          			<a href="https://github.com/alexdillon/GroupMeClientApi//blob/develop/docs/index.md/#L1" target="_blank">
+          				<div class="image github"></div>Edit on GitHub
+          			</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="styles/docfx.js"></script>
+    <script type="text/javascript" src="styles/main.js"></script>
+  </body>
+</html>

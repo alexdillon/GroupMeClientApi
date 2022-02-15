@@ -1,0 +1,695 @@
+{
+  "homepages": [],
+  "source_base_path": "/github/workspace/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "source_relative_path": "images/connect-widget-sprite.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/connect-widget-sprite.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/favicon.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/favicon.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/gmcapi-logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/gmcapi-logo.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/gmcapi-logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/gmcapi-logo.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "G8j84t+gD50OH+ptd7qBSA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.AssemblyInfo.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.AssemblyInfo.html",
+          "hash": "vjFB2fNK7SW+4RmfSx7KgQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.CachedImageDownloader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.CachedImageDownloader.html",
+          "hash": "llM/Vep+BbadmxqAnEVcag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.GroupMeClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.GroupMeClient.html",
+          "hash": "Qay5KVBoZ/TB4lTURQqf9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.ImageDownloader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.ImageDownloader.html",
+          "hash": "1IUVivesB1NYHuCPcFsNvw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.JsonAdapter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.JsonAdapter.html",
+          "hash": "y+6U96dwQYUUHF0hTs60Sg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.MessageRetreiveMode.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.MessageRetreiveMode.html",
+          "hash": "0o7worM4uU14fCv2AyxNiw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.Attachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.Attachment.html",
+          "hash": "hM6LsJllo2rPMpcso7uOfQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.EmojiAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.EmojiAttachment.html",
+          "hash": "VCz6m0f3Rc+34aiio2uIvg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.FileAttachment.FileData.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.FileAttachment.FileData.html",
+          "hash": "SNecwHyP66VhWmsH8B4HMA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.FileAttachment.GroupMeDocumentMimeTypeMapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.FileAttachment.GroupMeDocumentMimeTypeMapper.html",
+          "hash": "e+hcQJYw/DXn8QXa+KYSyw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.FileAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.FileAttachment.html",
+          "hash": "+tuX2jmt+y/uLjXrZkWyYg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.ImageAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.ImageAttachment.html",
+          "hash": "WHy9rGdTrQ/rZj8ni2EM3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.LinkedImageAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.LinkedImageAttachment.html",
+          "hash": "dDCQ3+o2jbIy94aLFdWDLw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.LocationAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.LocationAttachment.html",
+          "hash": "ZE/b+kxEB0JFixlFEajNOg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.MentionsAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.MentionsAttachment.html",
+          "hash": "QmSHhgJIJljsJXK4FN9YLA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.ReplyAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.ReplyAttachment.html",
+          "hash": "FjKIaibnW3xYM4l9kVJ25w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.SplitAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.SplitAttachment.html",
+          "hash": "XNoPp9VbN15IU3JCBUlPdA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.VideoAttachment.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.VideoAttachment.html",
+          "hash": "vGB3xQoimXsCtzsl+C2o2g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Attachments.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Attachments.html",
+          "hash": "+TUlrEHV/Rj55afg5eInUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Chat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Chat.html",
+          "hash": "QAkqdWVywRRpey0ZMMeNiA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Contact.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Contact.html",
+          "hash": "Pv0g3Vqrd+4RT7njDXo8uA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Group.MessagesPreview.PreviewContents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Group.MessagesPreview.PreviewContents.html",
+          "hash": "RO1UdOMANPqKmnVzdqi59g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Group.MessagesPreview.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Group.MessagesPreview.html",
+          "hash": "1HMNOMofxLBCHNWFNxqmXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Group.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Group.html",
+          "hash": "RNiy5Px3J6VU9IItInO9OQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.IAvatarSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.IAvatarSource.html",
+          "hash": "G2BnfAQ8DNv+kkwRkb1S0A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.IMessageContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.IMessageContainer.html",
+          "hash": "YNDv6DFoApStkE32R9yjvg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Member.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Member.html",
+          "hash": "mPREs+W8swXxaIuMbKVzdg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Message.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Message.html",
+          "hash": "giitNRRkFlZfib7FsdItAw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.Placeholders.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.Placeholders.html",
+          "hash": "VtHnEPMyY3LzIJyUWVrrzw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.ReadReceipt.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.ReadReceipt.html",
+          "hash": "K8+Wy6jYYmK/v0V+DLaDcw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Models.html",
+          "hash": "9F2lOaKtVpKptLSaNo/QwQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.OAuthClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.OAuthClient.html",
+          "hash": "rxids9Wi7vApZdGy7NhneA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.DirectMessageCreateNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.DirectMessageCreateNotification.html",
+          "hash": "fGKMl/UC595cJNXirqioVA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.FavoriteUpdate.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.FavoriteUpdate.html",
+          "hash": "Ju6hAGhWrnRz9sPlYtpc4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.LikeCreateNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.LikeCreateNotification.html",
+          "hash": "o8OBwVPyUXRt5ZQ3codVEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.LineMessageCreateNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.LineMessageCreateNotification.html",
+          "hash": "h6w7iBP8RogFqu8ZaVj3ZQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.Notification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.Notification.html",
+          "hash": "udGPjzl8L6sfDzau8mFUOw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.NotificationSubject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.NotificationSubject.html",
+          "hash": "DVApm4Jy3Qm3KtZOZjHnNA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.PingNotification.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.PingNotification.html",
+          "hash": "1Mv8DQKaGBaNM4uUqacX/A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.Notifications.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.Notifications.html",
+          "hash": "Dyi4W90tsJgYWK0mLZ+XIQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.PushClient.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.PushClient.html",
+          "hash": "JZ/SxRIKIy3kA4w2U/CI4Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.Push.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.Push.html",
+          "hash": "NmBgR3JA7DIBpihgVu50CA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.UploadProgress.BytesUploadedChangedEventArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.UploadProgress.BytesUploadedChangedEventArgs.html",
+          "hash": "mPDCgWGjgTKu4nq0BsnUuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.UploadProgress.UploadState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.UploadProgress.UploadState.html",
+          "hash": "16rp/bCJuns8MvkbHYuMcQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.UploadProgress.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.UploadProgress.html",
+          "hash": "pl/rRNmHz7gQh1PtJYgQgg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "obj/api/GroupMeClientApi.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GroupMeClientApi.html",
+          "hash": "qhfe3cRODvWk9g+Of3zH+w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "obj/api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "yxo6tA5cjQVcx//0H15IZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "w9kVgsx3AynIOGgEeM7f8Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 1,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 46,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
