@@ -167,6 +167,29 @@ namespace GroupMeClientApi
         }
 
         /// <summary>
+        /// Returns the specified group.
+        /// </summary>
+        /// <returns> A <see cref="Group"/>.</returns>
+        /// <param name="id">
+        /// The id of the group to return.
+        /// </param>
+        public virtual async Task<Group> GetGroupAsync(string id)
+        {
+            var request = this.CreateRestRequestV3($"/groups/" + id, Method.GET);
+
+            var cancellationTokenSource = new CancellationTokenSource();
+            var restResponse = await this.ApiClient.ExecuteAsync(request, cancellationTokenSource.Token);
+            if (restResponse.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<Group>(restResponse.Content);
+            }
+            else
+            {
+                throw new System.Net.WebException($"Failure retreving /Group. Status Code {restResponse.StatusCode}");
+            }
+        }
+
+        /// <summary>
         /// Returns a listing of all Direct Messages / Chats a user is a member of.
         /// </summary>
         /// <returns>A list of <see cref="Chat"/>.</returns>
